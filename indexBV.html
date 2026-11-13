@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jeu concours Bien Voir · 100&nbsp;€ de bon d'achat à gagner</title>
+<meta name="description" content="Tentez de gagner un bon d'achat de 100&nbsp;€ chez Bien Voir, opticien à Muret.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #12161C;
+    --ink-soft: #4A5262;
+    --paper: #F3F4F7;
+    --card: #FFFFFF;
+    --line: #C9CEDA;
+    --cobalt: #2338F0;
+    --cobalt-deep: #1826B8;
+    --error: #B42318;
+    --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+    --body: "Figtree", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.5;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 0 20px; }
+
+  /* Bandeau de test */
+  .test-banner { background: #FFF0A8; color: #4B3F00; font-size: 13px; padding: 10px 20px; text-align: center; }
+
+  /* En-tête */
+  header { padding: calc(env(safe-area-inset-top, 0px) + 22px) 0 6px; }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; }
+  .wordmark { font-family: var(--display); font-weight: 800; font-size: 26px; letter-spacing: -0.02em; }
+  .pill { font-size: 13px; font-weight: 600; padding: 6px 12px; border: 1.5px solid var(--ink); border-radius: 999px; }
+
+  /* Accroche */
+  .hero { padding: 34px 0 8px; }
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(34px, 9.5vw, 48px);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    margin: 0 0 14px;
+  }
+  .lead { color: var(--ink-soft); margin: 0 0 24px; max-width: 40ch; }
+  .lead strong { color: var(--ink); font-weight: 600; }
+  .cta {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 54px; padding: 0 28px;
+    background: var(--ink); color: #fff;
+    font: 600 17px/1 var(--body);
+    border-radius: 14px; text-decoration: none; border: 0; cursor: pointer;
+  }
+  .cta:hover { background: #000; }
+
+  /* Bon d'achat — verre translucide (liquid glass) */
+  .ticket { margin: 34px 0 0; transform-origin: 50% 0; animation: settle 700ms cubic-bezier(.2,.8,.2,1) both; position: relative; isolation: isolate; }
+  /* Taches de couleur floues derrière le verre : ce sont elles qu'on voit à travers */
+  .ticket::after {
+    content: ""; position: absolute; inset: -12% -8%; z-index: 0; pointer-events: none;
+    border-radius: 40px; filter: blur(34px); opacity: .95;
+    background:
+      radial-gradient(42% 46% at 20% 22%, #5b8bff 0%, rgba(91,139,255,0) 70%),
+      radial-gradient(46% 50% at 86% 16%, #8a5bff 0%, rgba(138,91,255,0) 70%),
+      radial-gradient(52% 54% at 78% 96%, #2036e8 0%, rgba(32,54,232,0) 72%),
+      radial-gradient(50% 60% at 12% 92%, #3ad0ff 0%, rgba(58,208,255,0) 70%);
+  }
+  /* Reflet spéculaire + arêtes de verre nettes posés par-dessus le verre */
+  .ticket::before {
+    content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+    border-radius: 22px;
+    background:
+      linear-gradient(150deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.1) 9%, rgba(255,255,255,0) 26%),
+      linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,.55)) top    / 100% 1.5px no-repeat,
+      linear-gradient(rgba(255,255,255,.4),  rgba(255,255,255,.4))  left   / 1.5px 100% no-repeat,
+      linear-gradient(rgba(6,10,70,.4),      rgba(6,10,70,.4))      bottom / 100% 1.5px no-repeat,
+      linear-gradient(rgba(6,10,70,.32),     rgba(6,10,70,.32))     right  / 1.5px 100% no-repeat;
+    box-shadow: inset 0 0 12px rgba(255,255,255,.22);
+    -webkit-mask: radial-gradient(circle 15px at 0 var(--seam,50%), #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% var(--seam,50%), #0000 97%, #000) right / 51% 100% no-repeat;
+            mask: radial-gradient(circle 15px at 0 var(--seam,50%), #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% var(--seam,50%), #0000 97%, #000) right / 51% 100% no-repeat;
+  }
+  @keyframes settle { from { transform: rotate(-3deg) translateY(-8px); } to { transform: none; } }
+  .ticket-top, .ticket-bottom { color: #fff; position: relative; z-index: 1;
+    background: linear-gradient(150deg, rgba(72,96,240,.58), rgba(27,40,200,.62));
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+            backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+  }
+  .ticket-top {
+    padding: 26px 24px 30px;
+    border-radius: 22px 22px 0 0;
+    -webkit-mask: radial-gradient(circle 15px at 0 100%, #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% 100%, #0000 97%, #000) right / 51% 100% no-repeat;
+            mask: radial-gradient(circle 15px at 0 100%, #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% 100%, #0000 97%, #000) right / 51% 100% no-repeat;
+  }
+  .ticket-bottom {
+    position: relative;
+    padding: 24px 24px 26px;
+    border-radius: 0 0 22px 22px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    -webkit-mask: radial-gradient(circle 15px at 0 0, #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% 0, #0000 97%, #000) right / 51% 100% no-repeat;
+            mask: radial-gradient(circle 15px at 0 0, #0000 97%, #000) left / 51% 100% no-repeat, radial-gradient(circle 15px at 100% 0, #0000 97%, #000) right / 51% 100% no-repeat;
+  }
+  .ticket-bottom > * { position: relative; z-index: 1; }
+  .ticket-bottom::before {
+    content: ""; position: absolute; top: 0; left: 22px; right: 22px; z-index: 2;
+    border-top: 2px dashed rgba(255,255,255,.45);
+  }
+  .ticket-kicker { font-size: 15px; font-weight: 600; opacity: .9; margin: 0; }
+  .ticket-amount { white-space: nowrap; font-family: var(--display); font-weight: 800; font-size: clamp(84px, 26vw, 120px); line-height: .95; letter-spacing: -0.05em; margin: 6px 0 8px; }
+  .ticket-note { margin: 0; font-size: 16px; opacity: .92; max-width: 30ch; }
+  .stub { margin: 0; font-size: 15px; line-height: 1.35; }
+  .stub strong { display: block; font-family: var(--display); font-size: 20px; letter-spacing: -0.01em; }
+
+  /* Formulaire */
+  .form-section { padding: 44px 0 30px; scroll-margin-top: 16px; }
+  .card { background: var(--card); border: 1.5px solid var(--ink); border-radius: 26px; padding: 22px 18px 24px; }
+  @media (min-width: 480px) { .card { padding: 28px 26px 28px; } }
+  .organizer { display: flex; align-items: center; gap: 14px; padding: 14px 16px; margin: 0 0 26px; background: var(--paper); border-radius: 18px; }
+  .organizer p { margin: 0; line-height: 1.3; }
+  .avatar { flex: none; display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; background: var(--ink); color: #fff; font-family: var(--display); font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }
+  .organizer .kicker { font-size: 13px; color: var(--ink-soft); }
+  .organizer .who { font-family: var(--display); font-weight: 800; font-size: 21px; letter-spacing: -0.01em; }
+  .organizer .role { font-size: 15px; color: var(--ink-soft); }
+  .axa-logo { margin-left: auto; flex: none; width: 44px; height: 44px; border-radius: 4px; }
+  .organizer .role strong { color: var(--ink); font-weight: 800; letter-spacing: 0.02em; }
+  .official-link { display: inline-block; margin-top: 6px; font-size: 13px; font-weight: 600; color: var(--cobalt); text-decoration: none; }
+  .official-link:hover { text-decoration: underline; }
+  .shops-field { border: 0; padding: 0; margin: 0 0 18px; min-width: 0; }
+  .shops { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .shop { position: relative; }
+  .shop input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .shop span { display: block; padding: 14px; min-height: 64px; background: #F8F9FB; border: 1.5px solid var(--line); border-radius: 12px; font-weight: 600; line-height: 1.25; }
+  .shop span small { display: block; font-weight: 400; color: var(--ink-soft); font-size: 14px; }
+  .shop input:checked + span { border-color: var(--cobalt); box-shadow: inset 0 0 0 1.5px var(--cobalt); background: #EEF0FF; }
+  .shop input:focus-visible + span { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  .panel { background: #EEF0FF; border-radius: 18px; padding: 16px 16px 14px; }
+  .panel select { border-color: #B9C1FF; background-color: var(--card); }
+  .fineprint { text-align: center; font-size: 13px; color: var(--ink-soft); margin: 12px 0 0; }
+  input:focus, select:focus { border-color: var(--cobalt); }
+  h2 { font-family: var(--display); font-weight: 800; font-size: 28px; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 6px; }
+  .sub { color: var(--ink-soft); margin: 0 0 24px; }
+  form { display: block; }
+  .field { margin: 0 0 18px; }
+  .row { display: grid; grid-template-columns: 1fr; gap: 0; }
+  @media (min-width: 440px) { .row { grid-template-columns: 1fr 1fr; gap: 14px; } }
+  label.lbl { display: block; font-size: 15px; font-weight: 600; margin: 0 0 7px; padding: 0; }
+  label.lbl .facultatif { font-weight: 400; color: var(--ink-soft); }
+  input[type="text"], input[type="tel"], input[type="email"], select {
+    width: 100%; min-height: 54px; padding: 0 16px;
+    font: 400 17px/1 var(--body); color: var(--ink);
+    background-color: #F8F9FB; border: 1.5px solid var(--line); border-radius: 12px;
+    appearance: none; -webkit-appearance: none;
+  }
+  select {
+    padding-right: 44px;
+    text-overflow: ellipsis;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none'><path d='M1 1.5l6 6 6-6' stroke='%2312161C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+  }
+  input:focus-visible, select:focus-visible, .cta:focus-visible, summary:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+  input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--error); }
+  .err { display: block; min-height: 0; color: var(--error); font-size: 14px; margin-top: 6px; }
+  .err:empty { display: none; }
+  .hint { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
+
+  .consents { border-top: 1.5px solid var(--line); padding-top: 20px; margin-top: 8px; }
+  .check { display: grid; grid-template-columns: 26px 1fr; gap: 12px; margin: 0 0 16px; align-items: start; font-size: 15px; line-height: 1.45; }
+  .check input { width: 24px; height: 24px; margin: 1px 0 0; accent-color: var(--cobalt); }
+  .check .opt { display: block; color: var(--ink-soft); font-size: 13px; margin-top: 3px; }
+  .note { font-size: 13px; color: var(--ink-soft); margin: 4px 0 22px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  button.cta[type="submit"] { width: 100%; min-height: 58px; background: var(--cobalt); font-size: 18px; }
+  button.cta[type="submit"]:hover { background: var(--cobalt-deep); }
+  button.cta[disabled] { opacity: .65; cursor: progress; }
+  .form-error { color: var(--error); font-size: 15px; margin: 14px 0 0; }
+  .form-error:empty { display: none; }
+
+  /* Confirmation */
+  .done { display: none; padding: 8px 4px; }
+  .done h2 { margin-bottom: 10px; }
+  .done p { margin: 0 0 10px; color: var(--ink-soft); }
+  .is-done .done { display: block; }
+  .is-done form, .is-done .form-head, .is-done .organizer { display: none; }
+
+  /* Règlement et pied de page */
+  details { border-top: 1.5px solid var(--line); padding: 16px 0; }
+  summary { font-weight: 600; cursor: pointer; }
+  details p { font-size: 15px; color: var(--ink-soft); margin: 10px 0 0; }
+  details p strong { color: var(--ink); }
+  footer { padding: 22px 0 36px; font-size: 13px; color: var(--ink-soft); border-top: 1.5px solid var(--line); }
+  footer p { margin: 0 0 8px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticket { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="test-banner" id="test-banner" hidden>
+  Mode test : aucune réponse n'est enregistrée tant que <code>CONFIG.endpoint</code> n'est pas renseigné dans le script.
+</div>
+
+<header>
+  <div class="wrap">
+    <span class="wordmark">Bien Voir</span>
+    <span class="pill">Jeu concours</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" aria-labelledby="titre">
+    <h1 id="titre">Tentez de gagner 100&nbsp;€ à dépenser chez Bien Voir</h1>
+    <p class="lead">Jeu organisé par <strong>Elio Faure, conseiller AXA</strong>, avec Bien Voir, votre opticien à Muret.</p>
+    <a class="cta" href="#participer">Je participe</a>
+
+    <div class="ticket" role="img" aria-label="Un bon d'achat de 100 euros à gagner chez Bien Voir, opticien à Muret">
+      <div class="ticket-top">
+        <p class="ticket-kicker">Bon d'achat</p>
+        <p class="ticket-amount">100&nbsp;€</p>
+        <p class="ticket-note">à dépenser chez Bien Voir, votre opticien à Muret.</p>
+      </div>
+      <div class="ticket-bottom">
+        <p class="stub"><strong>Bien Voir</strong>Opticien à Muret</p>
+        <p class="stub"><strong>1 gagnant</strong>Tiré au sort</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section" id="participer" aria-labelledby="titre-form">
+    <div class="card">
+    <div class="organizer">
+      <div class="avatar" aria-hidden="true">EF</div>
+      <div>
+        <p class="kicker">Jeu organisé par</p>
+        <p class="who">Elio Faure</p>
+        <p class="role">Conseiller <strong>AXA</strong>, Toulouse</p>
+        <a class="official-link" href="https://agence.axa.fr/distributeur/0066698575" target="_blank" rel="noopener">Voir ma fiche officielle AXA ↗</a>
+      </div>
+      <img class="axa-logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACwCAYAAACvt+ReAAAr8ElEQVR42u2deZgU1b33P+dUdffsC+uwDJuIiggKhB2BYQmKW6K5eWPeBEHQGBXXuNxo1BgV9+sGIYDbNd5749XXuLMMOyiIIAoBEWQH2Zl9uruqzvtHVTUzTPfQPcD0DNTveebheYae7upzvud3vr9dwHMWCIEnniRZNCxMUrg6sJ63cj4hgALgWHBaSKQIMqO8B9IDrycNQSQKEz+dtf38R+YCUkQYC1EDvCYCKYIsD+Vzb+kQpLd0niRbBKCQpBDitew5tNWPYCkfmqOBXVGAhsl+K5PxxSM5ZKV6APakYWhfheSZzEUM8m/FVH7kMeAFgQIsBDcXDeNfRks0Qh6APWkYvPe3KWv5ffpqjKjgBQOQIsgzZb14J3g+GkFMpAdgT5LNewP09u3gxawFoCRaFKPNRKCLILOCZ/Ng2UAkIazIe3jiSVJ4r0Kh0VSWMTNrLtmyAgstisdBoAmD7WZTJhYPJ6R0QKGcV3oA9iQpRptEAIIXM+fT3bcbQ/nRInrVBS8oLEJK4/qi4ewwm6JhYFWBuQdgT5JEHfzcnf4l16auxVIB9GPAa3sdbO37YOlA5oY6O7xXHPNennhSr0abzXt/6t/EXzKWYind8S8cSx0kmgjyPxVdearsJw7vFVEOgyee1Kvm1WktDzE1uxC/MCJk4lijTYoQ68N53FYyzPETqygw9wDsST2KQuLD5LXsuXTUDmIpXw2XmUIgsCi2UhhXNIK9ViYSI2K0eQD2JClGm+Z4HR7PXMqolM2YKoCMwnstQAqLO0uGsNzIj/h7Y2t1Tzw55bzXwiTAL1I2cFvalxiWL0awQqKJSv5W1oOZFT3QCNUKXgDdW15PTi3vtTAIcL7+I3/NnIcvQhPUMZrXDlYsC7XnztIhCMwo+tnTwJ7UK3Ww029yZRmvZs2hiVaKRU2vg0IghckBM5PxRSMoUwEEVkze6wHYk3rhvRLbHfZ0xiL6+Lc7eQ7WMeAFywH070sK+M7MQyMc1WXmAdiTetW+JgFuTlvN9WnfYKqUGpE2lzpoIsQTpX14p/I8NIJxg9cDsCeniPcqLPwM9m/l6YzFWEpDRiEELng/C3bh4bIBSCdMrBL6LE88Oeng1Wghi5mWNZdUGSRasMJCIDHYZjThhuLhhJSGipAJD8CeJIn3gkATir9lzeM8376oyekKgRKKcnTGF49kh5mDTjguo80DsCenWPv6eDDtC65M2YBlRee9tm8izIMlg5gX6oRGCKOOUPQA7MlJETtY4efSwPfcm7EcU/mislkTiZRB/rvifP6jvBdajCQdD8Ce1KvmNfFztn6AmVlzSMFExAhWaCLIN6FW/L64wMn3VQnzXg/AnpxE3qsQSDJFkJmZc8nTirHQYybplFjpjC8eyWGVhsQ8Ie3rAdiTEzbaJGCi8XjGEgYHtmCoQBTw2j9CmNxRMpivwm0TClZ4APbkFFEHO0nnt6nfckv6KiwViGq0mU4nnSllPZlZ0QM9wWCFB2BPThnv7a3v5KXMBSjlVrlRg/fqIsSSYAfuKx2MxMR0NLIHYE+SBl6FRhNZxszsOWTJCixkVKNNYrLPzGRC8QhKVADiTNLxAOzJKeS+tq59OXMB3X17MKO2gbLzycIIflc8nO/MFugn6DLzAOzJCYvmUIe70r/kV6lrMVWgBnht7Qu6CDO5rC//L3gOGsE6Bys8AHtyksBrG20j/Zv4c/pSTOWLCiALiSaDfFp5No+W9kOeJI+DB2BPTtBo85GvHWJ69lxSZdghE1F4rwizOdyU64uHE0aDEwxWeAD25AQ5rw0VvzCYmTWX9tphLOWP2v4ULILKx4TikeyxciIpkngA9iSZ2tdC49H0ZYwMbHIyzKInp0th8MeSgSxwknROJXg9AHsSp9EW4JrABu7K+DJG796jFcVvV3TjuZOQpOMB2JOTBF4fF+h7mJo1Dw07NT3azApdhFgTasPtJUOd35063usB2JM4aYMkS1QyPWsuzbSSqH3MlFNZUWSlMr5kJPutDEQtnXQ8AHtSb4abQuPZzIX09e9wknSiVxQrLG4vGcKqcBuHOsh6PGieeFKDOtj+3t+nrmJC2pqY7U/t/N4wL5f34vWK7lHbn3oA9iQpRtsQ/1aeyrQrimO3Pw2xJNiee0oGIzDrHbwegD2pwXtNdJo7FcXpMoiK0fZfiDC7zWzGFY+kkuhuNQ/AntSrKIf5Ts8s5Bx9vxOsqMl7QWEpyU1Fw9lkNkcSSor29QDsSTXqoPDxcMbnXJn6XcxghXJCxY+X9eWD0DlOJ53kwcgDsCeRiuIx/u+5L/0LTKXHDFZIEeSjyrN5tLR/vQUrPAB7chze6+cs7QDTs+cQsEdpx6ys2Gg053fFwwk7ae0q6c/vyRkrtndBkiWCvJo1l1ZaMSa+qMEKUFQqPxOLR7KrHpJ0PAB7EtfmW+g8mrGYi52K4mhGmwlIEebe4kEsCnVsENTBA7DHezFJYWzqt0xKWx2zotjtnP5meXderOiFJJgkh5kHYE+O4b19fNt5MXN+hCJEb38aZk2oNbeWDHHGw6p6y3PwAOxJVPAqNHJEOdOyCsmS5Sj0GkCwEAhMiqw0riseSbFKR2I2KPB6AD5jTTfB1Kz5XOjfHXXcldtJB+CW4mF8bbRxJgaJBnggPTmDeK/dOf0PaSv4P6lrMa1AjPan9pjXl8sv4q3KbklJ0vEA7EkUo81Pgf8H/pTxuROsqCl2G6hKFoXcTjpGgzLaPACfoaTBxE++dpjXsuaQIcOIGJ10NGGw08zl+qKRlCtf3OOuPAB7csrAKxGkiTAzsubSTj/k9HNQNV7pamA7SacZGkaDpQ4egM8I8IIGmPj4U/oyRgU2YUTJMLOBC1KEeLSkLx+FujRYo80D8BkFYHvM6zWB9dyb8WXUXg42eO1xV+9XnsOjZae2k44HYE/i3Fjb43CBvodpWfMcv5iIEaww2Bxuzu+KC5w5bVbSk3Q8AJ/h4FVIMkUl07Pm0EQrwUKrwXstp+1/SPkYXzKCvVZ2gwxWeAA+A7mvQuO5zIX09e90ZhRH7yAphMmdxYNZFOqATrBRgdcD8GkoblHm79OqVhRHH3eliyCvlXdnSkXPSPtT1ci+rwfg0wq8drBisG8rkzMXY0UpyDzKe0OsCrfhztKLAdWggxUegM8I2mBXFLeQxUzPKiRTBJ25FVHGXQmTA2Y644pGccRKQ9ZjJx0PwJ5E5bwSgQ/FtKxCzvHtw4rS9t8GsAIFtxUP5RsjD40wZiOGgQfg0wK8dqj439OXc1XKdzGNNnvMa4j/KOvF28FujSZY4QH4tAaw3QZqTGAjD2R84QxcicZ77fanhZWduLd0YKOmDR6ATxNxp8N31vYxI2suurCc9qfRxl2F2W3mcmPxCML4UFiN1nDzAHyagBckaYSZnlVInlaEGaWPmXIMPAvJxOLhbDabnTba1wNwI+e+FjpPZC5maGCLk6RTE7wmAiFC/Km0P58Eu5zUMa8egD2pk+hOsOK6lDVMSv8qZrDC7Zz+XmVXnirve1oYbR6AG7loWBj46OPbwfNZC7GUFvV1FgKNEBuNZvy+eBhhZVe+qdNsPTwANzLea6KTK8uZnlVIjixHxUjSAYtilcJ1RaPYa2WiET7twOsBuJFxXndG8SuZ8+nu2x2zGYkCpLC4v3QQn4fbNfpghQfg00b7+rg7bSW/Sl2HqQKIqJUV9pjX18ovYEr5Racl7/UA3CjB62eYbwsPZy7BVDZtENHAK4KsCLXltkgnndN9bTxp8OC10O2K4uzZpAsjZvtTicEhM4OJRSMpUamAeVq5zDwANzrea09hSxMG07MKaa8fxlS+qMEKUAgBt5YM5RujFRqh0yZY4QG4EW+Oic6D6Z/z08D3tVQUC6QI8Wxpb96OdNKRZ8waedIAxZ3V9ouU41UU28GKucHO/KlsAFoD76TjAfgMMtp6+PYwJWseKDuj4VhCoBBohNlt5jCxeDjlyu9UFAsPwJ4kD7wKSbqoZFpmIc1kCRY1h67YY14tKtAYVzSCrWaTBtU53QPwGSwKjRczF9LXvx2zls7pmjD4c+lAZoc6O/5eeQYeeE8aEO9VWAS4OW0V49PW1AJe29/7XuW5TC7r3ag66Zxs0T3YNBRNYs+s6OPbwSMZSwkrzemRXlPz+kSIDeGW3Fg83GHGZxbv9QDcwMSGoI8O2iHezfmIprIE8EEN+Ao0LEpUKuOLR3LAykSegbzXA3CDA7BCopiQ+i1lSuPrcH6MJB2b9z5f2ttJ0gme1nkOcR7+55UHoYbAfy1ayArMWrvjKASCfVa603jaE08DNxAxkeyxsogn5Vw0sgZ8HoDPmOvQiAuWlgfexgtgUce9U+rkvE+s9zs530UcV/9G+9y6fBelPAAnRZSyY1CJi4QqmkupE6kQE5wMF3riz6CwhwaIY97HTMrzewBOWFsp/H6d7OxAwn9/5EiQUOjoRjdtmoaUAlEH9WWaFocPB7GsE1Nj2dmpBAJaXMC1LEhL09mzp5xw2EAIgVIKTZM0bZqZ0OeGQiZHjgQ9ANenSCkxzUqefnoYt956IZalkDJ+8F111Yf885//wu9PJRQKc/vtPXnggT4Jvw/A7t1l9Oz5d/buLUEI3bkVEta/LFx4DT16ND8+53We8b33NnPjjbM5eNBA1yXhcCVXX30+//M/Y7AskPL4t5cQgqVLdzNkyDuYZuPnEY3iHtE0gWmG6Ny5Bb/61TkJ8T7TtOlGbm7ANn+E3b982rRv2LGjFClF3JrUxWlqqo6m1Y1ECwFCKFq0SKdTp+zj8lHDsMH7n/+5nl//+iMOHKgAJIZhoesBJk26qAq9iIc6QKtW6ei65HQosm8UALY3WDF+/Pk0a5aKYVhxX/2WQ5dzc1McQCt03c/OnQd4552NCRk0QtivzckJkJHhw62CSOwwSpQKccUVncjM9KNU7MNoP6vgv/7rO8aPn01lpYkQmvMcIX75y3MYOLA1SpHQLdKyZRopKXqdnt8DcMIaS6CUSX5+E2688QKUskGQqKXfqlU6oGNZCsuyAB/Tpn1LRYWRkDa1r2Ho1q1ZHb+LRXp6ChMmnB+hB7HAq2mCjz/eyg03zMY0LaTUHNBZNG2awQMP9EEp4qYw7lqkpuq0b595UrwxHoDj2nSDP/yhF02apEQAlKi0bn0UwLbW09i48QAff7wFpUjYIBs0qE3CV7CUYJoh7rmnH337toqANBrn1TTB6tX7GDfuU0pLQwghnd9LTDPErbf25Nxzm2BZVkLa19XWvXvnYedaeP2BTyH3ta/brl1b8ZvfnFcnY8mlGp06ZZOe7o+AzvZAWLz22r/qdCCGD89H0+I34GzgVXL11V0jmjMa8FyDbd++cn7721ns31+Krvuc30sMI0Tv3u247baLUCpxA9Q9qAUFbavYBB6AT4nbTCmFUoI//rEPOTmBOm2Y+/oLLmjm8GDL0eqglGT16n1s21YctzF39EBkccEFLVDKPO4zSWkboRdc0IqpU4cjpYh6k7igDoVMfvObz1i7dg9SBhzOb/t709MD/PWvBc56kDAA3Zf36tWC3NwsLMts1CBusACWUmJZIUaPPotrrz0nooHqchAsS5GR4aN//7yIBrYPg86ePUUUFu6olY9G02IZGX6GDWsLhGsFsA1Wm/dOmzaK5s1TMc2aB1Ep22OiFNx112Jmz96ErqdgWTZ4Nc2mUo89NohevVpGfY9EFEPHjtn06tUSpcJomqeBTzrvtSyDJk3SeeaZwSct7Pnzn59dBcCudjaYP3+nYxyK436WEET8p/36tUIIH6ZZOy9XyuTFF4fRv39eLbzXQtclr7++jqlTV6JpgYgL0KYOQa644lxuuql7ncHrrq1pKgIBjb59WybkhfEAHKeG0DSFUhbPPTeM889vmrChEksGDmxFVlZ6RKvZQAxQWLiNH38si0S3js9n7Wfp378VbdrkoJQR9RrWdYllBbnttp8wfvz5xzHaJMuX/8ikSfMxTYllHT1kphmmbdsmvPzyUPx+zeHvJ6YgAIYOzcfvT8E0rUbrjWhwAJZSYBghJk68iLFjz4tsbiyXViIblpeXXuXalw6NkOzZc4TPP98TtyZy+XJ+fibdujV1eHVNo80wggwd2olHH+0fU0tblh0d27WrlLFjZ1FaWomUWiRqJoQiJUVj2rQR5Odnxnwfm9PHaxy7B7A1rVtnNGpjTjYs8EpMM0zPnm159tnBxzVS4l10IcAwLHw+ydCh+RzrwBdC8s473ztRsvjdUUrZ3giQ1fizfU2Hads2h1dfHUlmph8hRFTe64L4llvm8913e9E0X+S9qrrdLr20A4ZhxfRZJ/Ls7memp+sMGtSaxhyRazAAtsFokJubxsyZ9qbb2ik6eACWLNmVsPU9aFBrsrKyMAwjEllTSrBgwU6KioIRD0U87ycEjB7dASG0yN/YQLVIT9d57bWf0rFjthOEiH6DSCl45JEveP/99WhaSoRf24c5yOjRXXjwwT7HuYlgx44S1q075IAz/kN4+eWdoBH38pENA7y2trEsiyefvJgLL2weky+6V+js2dt45ZVv4jZCNM3Wkj16NOfcc3MB1/2lEEJj//4yPv10m/MZVpwHDrp0yeG885pErmFba5o8+ujFjBjRzvkeNZfZMGxe/8473/PYY5+jaX4nQuhSlDAdOjRh6tThTt4CMQ6zvR4PP/wFGzceSpBaQZ8+eWRlpUcoiwfgOlOHINdd14OJE7vFBK+bNxAOWzz44DIOH65MaMOUwqERbQERoQFukGHOnG1xUxNXe/v9GiNHtgfC+HxHv8cdd1wUiahFu751XbJmzX5uvnlu5BZwv58Q9v+//PJwOnTIdDR4rMMs+PjjLfz97+vJyPC73zTuA9iqVToDBrRBqRBSeho4YbHBE6R791a88MKQWpNb3CjV88+vZsWKrQSDZkzNFP2g2P/+7GedAS3CNe1/dZYs2c3eveVoWnxBDVdTX3xxG0AjFArSr197XnppaMxD5dKGI0eCjB8/h/37S5FSq8J7bf787//enzFjOsakDi692ru3nLvvXkQwWElxcTDuG8m1CwIBjcGDWzdaQy6pAHYTdbKyUpk2bSRZWf6Y0TZXm61cuZc///lzpPSxdWtxglef/boePZrRuXNuZNPs9/axceM+Vq3aFzcI3Oe88MLm5OZm0Lx5Bm+8MZKMDF/UULGbc2FZiptvns+qVTvRNP8xvDfE6NFnR3hvrO/mvv9DD33Bhg37AIudO0sT8uu6792/fytSU9MxDLPRudOSDGCwLJNnnhlCv355Ma9KNwHn8OEgN9xQSFlZEMvSOXQoyPr1h6po0fiu/dRUnUsv7QCEj7niFZ98srWato7Hnda+fRYDB7biueeG0qVLk5iBBlebPvPMKt5++1s0LVBN81pWmDZtcpk6taBW3muatjfi7be/Y9q0r/H57AqV9esPJZStZ0cJoXfvlrRvn13FLvAAfFyxnfyV3HDDRUyceEFMY8fVKJomuP/+paxevRNN05FSUFxczpw52+MGcNVrv6DgqPvLDTeDzj//udnJuxVxazFNE0yZMpxf//qcyLPGukFmzdrGgw8uQcqjmXHOK9B1jRkzRtChQ1bMShH3EHz77UFuu21+lWf3U1i4gyNHKpEyPrvA/dvMTD8/+UlLQDW6qFxSAOw6+fv0acfkyYOczYrNezXNrkiYNm0VUgaqGHlhFi/elVBo1X1dr14t6dixGZZlVHGdCXbsKGbRop0JaXWA/PwMQMTQmPbzbdtWwg03zCEUMlBKRsBic+4wDz00gNGjO8T8Pu4zVlQY3HRTIQcOlCCl7hhzGps2HWDt2oMJ0gj7tfaNJOtYHnUGAdgO4Ro0aZLBjBmjnFKf6Ja/u5GrV+/nllvmI4Ss9n/gZ/nyH9mxoyTubDLbSFK0bZtB794tACMCFjtZyOC99zYlpNWrurNi/b60NMxvfvMZ27cfRtN8EaC4RuyVV57HPff0qvUwugf9vvuWsHTpVucwW9UO0gcf/JCwHSIEDB3aloyMuudbnxEAtvMcQNcVL71UwAUXNK3lqiSy8TfdVEhxcRlCVPccaJrGzp2H+Prr/QlpHRc8BQXtnGSc6iBYtmwPRUUhdF0mHK6O9j2kFNxzzxIWL97iGG1WNY/D2We3YOrUAvx+LWZEzb11/vu/v+PFF1ehaX6nLL+6fPrploh7LRFp0SLNico1rvRKWZ/gdfMcbr31J1x77TkRZ34MmDkbv5jly7dXM3iO9Sx89tnWavQgHgoDMGZMB9LTU1DKivBBKX1s3LifFSt+rKLp6yausTV9+lqmTv3KyTBTVQCvSE/3M3PmKFq1So95mF3wbtx4hDvvXOBw3OoRQ/ugaWzZUsKqVfuqcON4bkR7H0aNal/tRvIAfIyGMs0ggwd3YPLkgTGNHTgapfrb39YydeqqaqmFx16poPHJJ7ZPOF7FcZS3ZjophSrCg6WUBIOVLFiwI6FDEcvYWrJkt2NsadUAp2lgWWEef3wwgwe3jnmY3XUqKQnzf//vp+zZU4xSeg1wut6H8vKyiGEb/+GzP7dPnzwCgbRGlZ1WLwC23TUGrVvn8vrrP8Xv12L6b03TzotdsmQXf/jDfMfJT0zvBAh27Sph2bLdCdW22dUe8POfdwaMyIa5Fv0HH2yhvDwccTUlIq4ve8+eMsaNm01FxdGaNnc9DCPI2LE9mDTpwpjBCvf7mKad7PPllztiUoeqWn3p0l2EQia6Hn9eB9hVK127NnOictID8FEjwU5bfPnlAjp1yq7FyrY3cteuUq67brYTWaqdh9qVG2Hef39z3NemCw4h7ChaampqNXeaEBpr1+6rYtEnYswd9RRMnDiXTZv2oWl6DX9vjx6tq0QeRa3+3hde+Jo331yDrgdq/X72LeVn6dI9/PBDUSRIE4+CMQxFVpbfMWxtCucBOMKxQtx7b19+9rOzIpsSbeOVgooKg7FjZ7N58/5qqYW1aw/FkiW7qagwHMMrfq3TqVM2ffq0dkprRBVNZvHuu5sSMg5dEAkBb721no8//hc+X9UMs6ORx1dfHUV2diBmxp2bLzFr1jbuvXcRQtjustqeRSnQdY2ioiKWLduT0HO77rSCgvxIlckZD2A7AyzIJZd04aGH+tV6VbrX7gMPLKOwcDM+X0okXGprqOg/NjD8rF9/kC+/3OtsfnzZZIZhkZbmY+jQNtgphdWjcrNmbT2OoRnbG9G8eRq6nuJoRRFJ0lFK8cILw+jZs0XMw+wacxs2HOb662djmqbTE0LUuh5H3YG+yI0Ub88Lt8pj+PB2ZGe7xa9nMIBdF1HHjs2YMmUYfr88LmecOXMdzz33BaARDhtYlollmSgV+8c0TSwLKipKKCzcXs0oiRdsw4blk5qaFskFsDWXjw0bDrNo0a5qdXDxavZ+/fJo3z4XyzKQ0jViQ9xySy+uu65rzMijSylKSkJMnDibXbsOoZTENA2Uqn09LMvEMAwsC+bM2c7u3WVx3yDuczdvnkrfvnk0luSeU9jcT+H326UwHTpkYxh2m6RY2mbNmgM8/vgKWrXKrsJ749UeYBgBVq/eTyhkOkbi8bPU7CJORd++eXTokM369fsQwudsukV2dip5eenVNji+g2uRl5fOhRc2Y/Pmfei6JBSqZODADjzxxIBaI4+uR2Ty5C/59tsDtGnTNKLFE3PhKRYu3MmvfnVO3AlPbvLQmDEdmTVrY2QtzjgA67rt73300WGMHNku0uOrNi3Ypk06c+b8HJ9Pq1M403YjHfXxJlIalJKiU1CQz4YN+yJl51LCtGkj6Nq1SR06WAqn3Kgd7733PeFwmFatsnn11ZFkZPhrjba563H99d248cbudbY7LAsyM30JuQJtygYDB7aO+N2P3khnCIDdPIdrrunKnXf2jJlhduzV1axZKs2apSZlEZSCq6/uzCuvrEJKQTgc5OGHL+aqq86qUwm722fhkks64PPpGEaYKVOG06VLbsxk/WPF7VxZn+Luxdln53DRRXmsXLkTTWvYBt1JBbDbgaZLl+a88kqBk3EW3/WVSJO64z1D4m4+6NmzBWed1YTNm/dy1VXnc999P4mAN3EqaP9Bhw5ZnHtuLiNGtI8chniNKtdPfeIuzMTWzjDs7LQBA/JYuXIrUvrPDADbC2WRnh7g9dd/SosWqQldvbaVnhyjQSlFdnaAAQNaU1oaYsaMEQQC8fHo2sQwLF56aSg9e7ZIuAVqouA7mbYLCAoK8pkyZQ3hsNWgacRJmRPn5jmYZpiXXhrJLbf0cFxEjSOa4z7rZ59tw++XFBTk16lz++kgbi/msjKDHj3e4ocfDkVyl09bDWyDN8ivf92Dm2/u4fBeGdPSrR8+F78Gcw/a6NHtqxgzJwe8LoWK3YykYa2HawBmZPgoKMhny5aDp7cXwtW8F17YlpdfHhrRxrE2rCFrNVf7RKMyR/s+nDxOnkzaFM9a/PKXXZgx4+vTF8BuaDQnJ40ZM0aQkxOotRRGSsEnn2zj4MHyuBNN6kJnwmFFr14t6Nq1aUKgs18narXQT0b/BPd7FxUF+eSTLafcs2BZigED2tCxY1Zc1MjV1r17t6RjxyZs2XKkWuX0aQNgIex2/c89N5RevVo4g0dkFI6pIkWIY8d+gmGcyoWwS40uu+xcPvzwihM+JO7fHzkS5O9/38DEid3iHI1Vu9EopeD22xfyxhurgaONt0++SKCce+8dwuTJA+OaZuQ+Y05OgMsu68RLL32BpqU1SADX2cpyW93fdFNPxo3rGkk+iaZ5NU2wfv1BJk2a5/T30hBCnpIfKSVC6CxfvofDhytPyIJ20xmFgD/+cSl33jmf4uJQNWDXxWC0pw5t4I03vkHKFEfjnZr1sPm9n4ULd1JWFnZuvuMnSLmus+HD8yOutIbIdmTdwRtkwID2PPnkoFp7mAkhKCsLc911czh4sBQpfZGsqlPzY3d1P3iwggUL4i/OjKWFNE3w5pvrmTp1NeGwxUcf/VBn48tNZtqw4RD33rsgYuieurXAaSWrs3z5br7//kjch8/Ngx4woBWdOjXFssINkq8nDGA7n9WgefNMZswYWWVUlKix+S6w77prEStWbK/W/+tUGh+apmFZwUjn9bqAzQ1irFq1j0mT5jm3hsW7735fK1eu7bnc5tK3376IPXuKEeLUu6dcw1mpcJVkp3j3WdG8eRr9++chxGmggd3cW4ApU0Zw3nlNaun/ZSfLvPrqOqZNW42u++uRQylAsnLlXkpLw86wGJWw5j1woIJx42ZRVFTh9BMWrFy5j02bjjjNCBOvWn7qqZXMmvV9tYri+vGuSN5/f3PESIt3v92qFaW0BhmRSwjA7tyK++7rxzXXdI5Z/Xq0DdQ+7rxzIaBhmqLeojl2RbPO2rX72bDhUELpkK5UVBhMmrSAb775EU3zEw5baJqPvXuPJNxMxbX8N206wrPPflWtPUD9ANg+0GvWHHAqNeJNsbS9EQUF+bRokUFDrNKIeyXtca+VjB7dhYce6hszT8B13B88WMn118+iqKg80g29PjdM0zTKysoi1cXxah33qg8GTT7+eEu1Un4h7H8/+OAHB9AybiCAnWvrzrqrb5+ulBqlpRV8+unWiDEZrwbOyvLHaMXVSADsBis6d27OzJl2noCdpF1zodz8gdtvX8g33+yuZ+pwrNbRmD17e60V0LE2LScnwLBh+ZGSe5cXC+Fn3rztrF9/KJJ6Gc97mqadb2GX7NT/erg8eMGCnQmN53L3bsyYjlXclI0IwG59WGZmgJkzR9G6dUYt1OFoEeJbb32LlCkYRnK6f9uUQWPhwp0cORJ/29GqRt8vfnE2VUtr7I2XhEJBXn99XYIAsv/+mmvORqn6DwrYn+djxQq7k1G8LWTd7967d0vatm2KaYYbVDRVxrPwlmXwxBNDuPjiNjHnNLguooULd3L//Ysjg0qS/fWOHDl6bSb6PIMGtSYnJyNSqGkfWpOUlBSuvPKsBJ/Fplt9++bRrl029V1zZu+PzvbtB1m9el/cHN6tbG7fPosBA1pxvLl4DQrAum77eydOvIibb+5ea7DC7YMwYcIcKiqCCCGTnoLnLnQgIBP8O1tbtm6dQUFBe8BuM+Ue5kce6c+QIW0TzlhTCjIz/c5cinASsvXsZ501a7tj18g4AHw0mDNiRDuE8Neb9+SEAOw23xg4sD3PPTfkuInplgU33ljIpk37G0QStFsRfeutPbn66rMTHFMrIlON7JnCErAz7i67rAt33NEz4ciU28IJXCBoMQNAp04LW4DORx/9QEWFGbc3wgX6pZd2IDs7tZpd0CABbDuxTZo2zeRvfzvacby21qGPPPIFH374nVNLZSUdvKYZZMiQjjz22IA68U2XJg0fnk/z5tkYRiXt2jVlypQCfD4ZqTSuy43Qr18rzjqrWb1Ht6q2kHW9M/EaoUpBmzYZ9O/fCiEaTsWyjP5FLafMfVSkqDHWxCBNE3z44RYmT/68WgeaZIk7oy0vL7vWSGE8YLMsxbnnNuG883JRSjFlSkGVYYOJb6Db2jUvL40+fVqSjN4Ldvja5P33E2sh65Y4/eIXXRquBnbbnyoV5rHHBnPllZ1qbfuvaYLvvz/sNG1WWFZyea+di6wIBCTTp4+kc+ecmIcvERk9ugO33tqHMWM61jpsMBFNOGZMx0i3nfpeI7BYvHg3oZAZ13zoqn87dGgbsrMzGkwDQFnz6g1x7bXdufvunk5XGhn1NLq9e6+/fg4//liEpulJ9Tq4XWhMM8z99/fnsss6JtxVJ9aVf9NN3XniiYEJzZ+ojZoIYVcsN2mSlhRvhN205RBffbXP8TJYca2FO17XHisWahAlY7Lq1WIYQXr2bMOUKXZFsabJmLxXCMH99y9j8eIt6Hog6ZapEEcnuj/wQN/jTrZMRHJyAqSn+xIe51qb5OamMHx4u3rnk27/tLKyYpYt25PQetj9PaRjhDaMcQTSPV1KhWndOou3376U7OzYY17dL/Haa//i5ZdXImVK0sFrexxCnHdeHtOnj4houVi4SBQvxxukneg+uumkdpJM/V/F9vPqFBZuJxy24m6I6FKn0aPb06JFNqZpJN2Yk25PWV3XmTp1JOeck3ucMVH2rLY77pgf6UebzIPoekxyc1N5/fVRkXL+mumd9k8waLJjR2nC9CTWPrnemUSqTNz369s3j7y8nOM2fznZYiscH/Pn72D37tK4vRFVx4r17Zvn3B5J1sC2cz7MX/4yiCuu6FRLx0Tbkj9yJMiECbOdJB2NJHvMHBePxfPPD6NPnzwMI1abfnux//KXFdxzz6KTxieFgLvvXsLcufaY2niA7Ea32rXLZPDgNkCo3qNbUgoqKyuZP39nnTT4b3/btcaYg6QA2DQrGTu2R2RCTmzeaG/WbbctZM2a3dXmPSRLdN0OLtx9d1/GjnXLmmLPJv7kky08+eTnFBbuoKTkREuD7IPywgtf8+yz81mxYq8DjPgOnfv39txmLSklO0KIyESmRP7Gjsrlk5+fi1LJHQojhwzpGOkUfrxZbTNnruPNN79pMLzXMIJcemkXHnusf62NoqUU/PBDMRMnziEcVhw6VMnChbvivjqjaXNNE7z77ibuumsBmpbKrFnbCIetuEcSuLfcJZd0IDc3A6VM6jvTSynB6tX72L+/Iu7ndkPL2dkBfvnLLo43IokAfuONS8jODtQys8IGwNq1B7nnnoUNYnaCnaMRokuXlvz1r8Px+7WIdjj21lBKUVYW5sYb57J7dxF+vx/TDEUm0ycaeHG9G+vWHeSWW+ZiWRam6WPlyh/Ztcvl1vHzyY4ds52GKvU7p9hNcj94MMi6dQcTWgv3dZdd1pHU1NSk+oRl+/aZMRuOuAZKRYXB735XyKFDZUByo222uy9E+/a5vPvuZeTnZ8ZMqnH9tlOnrmHu3E1VavIUX365l8pKM6FyI3c9QiGTCRPm8uOPxUipI4QiFAozb96OOtGSe+75Cbrur+ekf3stKyoq2LDhUEK3ke31UQwc2Jp+/dqiVPIy1GRtCSVuAszTT3/F0qVbk57n4I5kbd06i/feu5xu3ZrGDFa4Awa/++4wf/7zCoTwORN/bBfS5s1FbNlSlFDZvXtLPf30V3zxxTY0LcWp+rW9MYn6VV1j7sILmzFuXDeUCtbrdeyO6928uSjB5z56E06c2A1InjGvm6aKaoyZpsLvl6xY8SOTJ7sASB543TlzzZtn8b//ezk9e7ZwNKggHK75XIahSEnRePLJlZSUlEaMTntiksaBA6Xs2FFC5845MRuyHLsemibYubOUF19c7cx9U1VsB8WGDYcwDAvDUFhWfEB0XWg339ydf/xjA8XFwXrugmMXr4bDVkJ2jautL7+8k9OWdj9C+Os9uKH7fNE3zud0l3/wwc+pqChH01KTZri5rrKLLmrD++9fQbt2mQCkpMTukOPzwcaNh/ngg++R0hfRLnYkShAOV3LwYCU+nyTWGkRbjylT1rBvXxFSpkQOtJvltX9/Bbou0RPod+R+do8ezXn44QHccUchQmj1sq7ucweDZtzrcKz4/Rqvvz6Kyy//X4qLrRPy7NQJwBMnzo15VR46VMncudsRIvkpkqBITdV56qmVlJcbtV61Lidet+4gBw+WI4SvmmawfbUBnn32K+bN2xF3H2Cl4B//+K7GbeTW3+3cWcK//dvHtRrFsbWZcObi1Z+N4eZFLFmymwkT5iTsDnOfWymFrqdgWaX1XnEt4HFV63+TQsORsPMT70LrtVxrAggBRoLPkFLL5ysgSN3Lz5O13qazFiciAep5drxLIdJr1TjJKsqM7oHwo2mBhDRM7GCLQtP8SBlI6BkMw4p5RQoh0LS0OruUkrXeQujoet0nEillc/lkROX0aAZQQxXLUif1eo1lwJ7IRjakA58IFQiHFY1RJJ540ojFA7AnHoA98cQDsCeeeAD2xAOwJ554APbEEw/AnnjiAdgTD8CeeOIB2BNPPAB74okHYE88AHviSQOR/w/MCTRXyK95lQAAAABJRU5ErkJggg==" alt="AXA" width="44" height="44">
+    </div>
+
+    <div class="form-head">
+      <h2 id="titre-form">Participez au tirage</h2>
+      <p class="sub">Un seul formulaire par personne. <span id="fin-txt">Le tirage au sort a lieu à la fin du jeu.</span></p>
+    </div>
+
+    <form id="jeu" novalidate>
+      <div class="row">
+        <div class="field">
+          <label class="lbl" for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" autocomplete="given-name" autocapitalize="words" aria-describedby="e-prenom">
+          <span class="err" id="e-prenom"></span>
+        </div>
+        <div class="field">
+          <label class="lbl" for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" autocomplete="family-name" autocapitalize="words" aria-describedby="e-nom">
+          <span class="err" id="e-nom"></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="tel">Téléphone</label>
+        <input type="tel" id="tel" name="telephone" inputmode="tel" autocomplete="tel" placeholder="06 12 34 56 78" aria-describedby="e-tel">
+        <span class="err" id="e-tel"></span>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="email">Email</label>
+        <input type="email" id="email" name="email" inputmode="email" autocomplete="email" autocapitalize="none" aria-describedby="e-email">
+        <span class="err" id="e-email"></span>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="profession">Profession</label>
+        <input type="text" id="profession" name="profession" autocomplete="organization-title" autocapitalize="sentences" aria-describedby="e-profession">
+        <span class="err" id="e-profession"></span>
+      </div>
+
+
+      <div class="field panel">
+        <label class="lbl" for="interet">Un point sur votre patrimoine ?</label>
+        <select id="interet" name="interet_bilan" aria-describedby="h-interet e-interet">
+          <option value="">Choisissez votre sujet</option>
+          <option>Préparer ma retraite sans mauvaise surprise</option>
+          <option>Payer moins d'impôts, en toute légalité</option>
+          <option>Transmettre mon patrimoine à mes proches</option>
+          <option>Faire fructifier mon épargne (immobilier, placements)</option>
+          <option>Mieux me couvrir en santé (mutuelle)</option>
+          <option>Protéger ma famille en cas d'imprévu (prévoyance)</option>
+          <option>Sécuriser mon activité et mes revenus d'indépendant ou de dirigeant</option>
+          <option>Financer un projet (achat immobilier, études des enfants)</option>
+          <option>Faire le point sur ma situation globale</option>
+          <option>Un autre sujet, j'aimerais en discuter avec vous</option>
+        </select>
+        <span class="hint" id="h-interet">Cela permet de préparer un échange utile pour vous.</span>
+        <span class="err" id="e-interet"></span>
+      </div>
+
+      <div class="consents">
+        <label class="check">
+          <input type="checkbox" id="c-reglement" name="consentement_reglement" aria-describedby="e-reglement">
+          <span>J'ai 18 ans ou plus et j'accepte le <a href="#reglement">règlement du jeu</a>.<span class="err" id="e-reglement"></span></span>
+        </label>
+
+        <label class="check">
+          <input type="checkbox" id="c-contact" name="consentement_contact" aria-describedby="e-contact">
+          <span id="txt-contact">J'accepte d'être contacté par téléphone ou par email par <span class="js-org"></span>, au sujet du concours et de ma sélection effectuée ci-dessus.<span class="opt">(Je peux me rétracter à tout moment, et il n'y a aucune obligation d'achat ni de souscription.)</span><span class="err" id="e-contact"></span></span>
+        </label>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label>Ne pas remplir <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <button class="cta" type="submit" id="envoyer">Participer au tirage</button>
+      <p class="fineprint">Jeu gratuit et sans obligation d'achat.</p>
+      <p class="form-error" id="form-error" role="alert"></p>
+    </form>
+
+    <div class="done" id="done" role="status" tabindex="-1">
+      <h2 id="done-titre">C'est noté.</h2>
+      <p id="done-l1">Votre participation est enregistrée.</p>
+      <p id="done-l2">Bonne chance pour le tirage au sort !</p>
+    </div>
+    </div>
+  </section>
+
+  <section aria-label="Règlement et informations">
+    <details id="reglement">
+      <summary>Règlement du jeu</summary>
+      <p><strong>Article 1. Organisation.</strong> Ce jeu gratuit et sans obligation d'achat est organisé par <span class="js-org"></span> (<a href="https://agence.axa.fr/distributeur/0066698575" target="_blank" rel="noopener">fiche officielle AXA</a>), en partenariat avec Bien Voir, opticien à Muret.</p>
+      <p><strong>Article 2. Participation.</strong> Le jeu est ouvert aux personnes majeures résidant en France métropolitaine. Une seule participation par personne.</p>
+      <p><strong>Article 3. Dotation.</strong> Un bon d'achat de 100&nbsp;€, valable chez Bien Voir, opticien à Muret.</p>
+      <p><strong>Article 4. Tirage au sort.</strong> Le jeu se termine le <span class="js-fin"></span>. Un gagnant unique est ensuite tiré au sort parmi l'ensemble des participants. Le tirage au sort n'a lieu que si le jeu réunit au moins 100 participants. Si ce nombre n'est pas atteint au <span class="js-fin"></span>, le jeu est prolongé jusqu'à ce qu'il le soit, et au plus tard jusqu'au 30 avril 2027 ; à cette date, le tirage au sort est effectué parmi les participants inscrits, quel que soit leur nombre. Toute prolongation est annoncée sur cette page.</p>
+      <p><strong>Article 5. Gagnant.</strong> Le gagnant est prévenu par téléphone ou par email et utilise son bon d'achat chez Bien Voir, à Muret.</p>
+      <p><strong>Article 6. Données personnelles.</strong> Les données collectées servent à la gestion du jeu et, avec votre accord, à vous contacter par téléphone ou par email au sujet du concours et de votre sélection. Vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition, à exercer auprès de <span class="js-contact"></span>.</p>
+      <p><strong>Article 7. Règlement.</strong> Le règlement complet est disponible sur demande auprès de <span class="js-org"></span>.</p>
+    </details>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Jeu gratuit sans obligation d'achat, organisé par <span class="js-org"></span> avec Bien Voir.</p>
+    <p>Vos données sont utilisées pour la gestion du jeu. Le contact commercial par téléphone ou email n'a lieu qu'avec votre accord.</p>
+  </div>
+</footer>
+
+<script>
+  /* ============ À COMPLÉTER AVANT MISE EN LIGNE ============ */
+  const CONFIG = {
+    // URL qui reçoit les réponses (Formspree, Web3Forms, Google Apps Script, etc.)
+    endpoint: "https://api.web3forms.com/submit",
+    // Champs ajoutés à chaque envoi (ex. { access_key: "..." } pour Web3Forms)
+    // Clé d'accès Web3Forms : les réponses arrivent par email sur elio.faure@axa.fr
+    extraFields: {
+      access_key: "b174ce96-9bb1-4591-9e73-e256bad0a21a",
+      subject: "Nouvelle participation - Jeu concours Bien Voir (Muret)",
+      from_name: "Jeu concours Bien Voir"
+    },
+    organisateur: "Elio Faure, conseiller AXA",
+    contactDonnees: "elio.faure@axa.fr",
+    dateFin: "31 janvier 2027",
+    // Le formulaire se ferme automatiquement le lendemain de cette date (heure de Paris)
+    dateFinISO: "2027-01-31"
+  };
+  /* ========================================================= */
+
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+  $$(".js-org").forEach((el) => (el.textContent = CONFIG.organisateur));
+  $$(".js-contact").forEach((el) => (el.textContent = CONFIG.contactDonnees));
+  $$(".js-fin").forEach((el) => (el.textContent = CONFIG.dateFin));
+  if (!CONFIG.endpoint) $("#test-banner").hidden = false;
+
+  const form = $("#jeu");
+
+  const fields = {
+    prenom: { el: $("#prenom"), err: $("#e-prenom") },
+    nom: { el: $("#nom"), err: $("#e-nom") },
+    tel: { el: $("#tel"), err: $("#e-tel") },
+    email: { el: $("#email"), err: $("#e-email") },
+    profession: { el: $("#profession"), err: $("#e-profession") },
+    interet: { el: $("#interet"), err: $("#e-interet") }
+  };
+
+  function setError(f, msg) {
+    f.err.textContent = msg || "";
+    if (msg) f.el.setAttribute("aria-invalid", "true"); else f.el.removeAttribute("aria-invalid");
+  }
+
+  // Texte exact du consentement affiché, conservé comme preuve avec chaque réponse
+  function consentText(sel) {
+    const clone = $(sel).cloneNode(true);
+    clone.querySelectorAll(".err").forEach((n) => n.remove());
+    return clone.textContent.trim();
+  }
+
+  function validate() {
+    let first = null;
+    const fail = (node) => { if (!first) first = node; };
+
+    const prenom = fields.prenom.el.value.trim();
+    const nom = fields.nom.el.value.trim();
+    const tel = fields.tel.el.value.trim();
+    const email = fields.email.el.value.trim();
+    const profession = fields.profession.el.value.trim();
+
+    setError(fields.prenom, prenom ? "" : "Indiquez votre prénom.");
+    if (!prenom) fail(fields.prenom.el);
+    setError(fields.nom, nom ? "" : "Indiquez votre nom.");
+    if (!nom) fail(fields.nom.el);
+
+    const telOk = /^(?:\+33|0033|0)\s?[1-9](?:[\s.-]?\d{2}){4}$/.test(tel);
+    setError(fields.tel, telOk ? "" : "Indiquez un numéro français valide, par exemple 06 12 34 56 78.");
+    if (!telOk) fail(fields.tel.el);
+
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    setError(fields.email, emailOk ? "" : "Indiquez une adresse email valide.");
+    if (!emailOk) fail(fields.email.el);
+
+    setError(fields.profession, profession ? "" : "Indiquez votre profession.");
+    if (!profession) fail(fields.profession.el);
+
+    const interetOk = fields.interet.el.value !== "";
+    setError(fields.interet, interetOk ? "" : "Choisissez un sujet pour participer.");
+    if (!interetOk) fail(fields.interet.el);
+
+    const reg = $("#c-reglement");
+    $("#e-reglement").textContent = reg.checked ? "" : "Vous devez accepter le règlement pour participer.";
+    if (!reg.checked) fail(reg);
+
+    const contact = $("#c-contact");
+    $("#e-contact").textContent = contact.checked ? "" : "Cochez cette case pour participer.";
+    if (!contact.checked) fail(contact);
+
+    if (first) first.focus();
+    return !first;
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    $("#form-error").textContent = "";
+
+    // Anti-robots : champ piège rempli => on fait semblant que tout va bien
+    if (form.elements["website"].value) return showDone("");
+
+    if (!validate()) return;
+
+    const prenom = fields.prenom.el.value.trim();
+    const payload = Object.assign({}, CONFIG.extraFields, {
+      prenom: prenom,
+      nom: fields.nom.el.value.trim(),
+      telephone: fields.tel.el.value.trim(),
+      email: fields.email.el.value.trim(),
+      profession: fields.profession.el.value.trim(),
+      interet_bilan: $("#interet").value,
+      boutique: "Bien Voir (Muret)",
+      consentement_reglement: true,
+      consentement_contact: $("#c-contact").checked,
+      texte_consentement_contact: consentText("#txt-contact"),
+      horodatage: new Date().toISOString(),
+      page: location.href,
+      version_formulaire: "bien-voir-v1"
+    });
+
+    const btn = $("#envoyer");
+    btn.disabled = true;
+    btn.textContent = "Envoi en cours…";
+
+    try {
+      if (CONFIG.endpoint) {
+        const res = await fetch(CONFIG.endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+      }
+      showDone(prenom);
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = "Participer au tirage";
+      $("#form-error").textContent = "L'envoi a échoué. Vérifiez votre connexion et réessayez.";
+    }
+  });
+
+  function showDone(prenom) {
+    document.querySelector(".form-section").classList.add("is-done");
+    $("#done-titre").textContent = prenom ? "C'est noté, " + prenom + "." : "C'est noté.";
+    const done = $("#done");
+    done.scrollIntoView({ block: "center" });
+    done.focus({ preventScroll: true });
+  }
+
+  // Fermeture automatique après la date de fin (heure de Paris)
+  const aujourdhui = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Paris" });
+  if (CONFIG.dateFinISO && aujourdhui > CONFIG.dateFinISO) {
+    document.querySelector(".form-section").classList.add("is-done");
+    $("#done-titre").textContent = "Le jeu est terminé.";
+    $("#done-l1").textContent = "Merci à tous les participants.";
+    $("#done-l2").textContent = "Le tirage au sort a lieu à l'issue du jeu.";
+  }
+
+  // Aligne la découpe du reflet du ticket sur la position réelle des encoches
+  (function () {
+    const ticket = document.querySelector(".ticket");
+    const top = document.querySelector(".ticket-top");
+    if (!ticket || !top) return;
+    // Mesure de mise en page (offsetHeight), insensible à l'animation d'arrivée du ticket
+    const set = () => ticket.style.setProperty("--seam", top.offsetHeight + "px");
+    set();
+    window.addEventListener("resize", set, { passive: true });
+    window.addEventListener("load", set);
+    ticket.addEventListener("animationend", set);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(set);
+    if (window.ResizeObserver) { const ro = new ResizeObserver(set); ro.observe(ticket); ro.observe(top); }
+  })();
+
+  // Ouvre le règlement quand on clique sur le lien depuis le formulaire
+  document.querySelector('a[href="#reglement"]').addEventListener("click", () => {
+    document.getElementById("reglement").open = true;
+  });
+</script>
+</body>
+</html>
